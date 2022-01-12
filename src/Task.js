@@ -4,19 +4,14 @@ import trashIcon from './assets/trash.svg';
 import Data from './Data.js';
 import './Task.css';
 
-class Checkbox extends React.Component {
-    render() {
-        return (
-            <label>
-                <input type="checkbox" className="taskCheckbox" />
-                &nbsp;&nbsp;
-                {this.props.label}
-            </label>
-        );
-    }
-}
-
 class Task extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            checked: false,
+        }
+    }
+
     #timeTill(due) {
         const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
@@ -57,15 +52,25 @@ class Task extends React.Component {
         }
     }
 
+    setChecked(checked) {
+        Data.tasks[this.props.id].checked = checked;
+        this.setState({ checked: checked });
+    }
+
     render() {
         return (
             <table className={this.#taskPriority(this.props.priority)}>
                 <tbody><tr>
-                <td className="taskLeftSide"><Checkbox label={this.props.title} /></td>
+                <td className="taskLeftSide">
+                    <label className={this.state.checked ? "taskTitleChecked" : "taskTitleUnchecked"}>
+                         <input onChange={()=>this.setChecked(!this.state.checked)} checked={this.state.checked} style={{defaultChecked: this.state.checked}} type="checkbox" className="taskCheckbox" />
+                        {this.props.title}
+                    </label>
+                </td>
                 <td className="taskDetails"><a>Details</a></td>
                 <td className="taskDue">{this.#timeTill(this.props.due)}</td>
                 <td className="taskIcon"><img src={editIcon} alt="Edit" /></td>
-                    <td className="taskIcon"><img src={trashIcon} alt="Delete" onClick={ () => { Data.removeTask(this.props.id); } }/></td>
+                <td className="taskIcon"><img src={trashIcon} alt="Delete" onClick={ () => { Data.removeTask(this.props.id); } }/></td>
                 </tr></tbody>
             </table>
         );
