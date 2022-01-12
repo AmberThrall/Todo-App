@@ -21,7 +21,7 @@ class NavBar extends React.Component {
             projects.push(<li key={project} className="navItem"><a>{project}</a><span className="navItemCount">{numTasks}</span></li>);
         }
 
-        let totalTasks = Math.min(Data.tasks.length, 99);
+        let totalTasks = Math.min(Object.keys(Data.tasks).length, 99);
         let now = new Date();
         let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         let todaysTasks = Math.min(Data.findTasks({ dateRange: { min: today, max: today } }).length, 99);

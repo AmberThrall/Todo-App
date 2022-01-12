@@ -1,6 +1,7 @@
 import React from 'react';
 import editIcon from './assets/edit.svg';
 import trashIcon from './assets/trash.svg';
+import Data from './Data.js';
 import './Task.css';
 
 class Checkbox extends React.Component {
@@ -64,7 +65,7 @@ class Task extends React.Component {
                 <td className="taskDetails"><a>Details</a></td>
                 <td className="taskDue">{this.#timeTill(this.props.due)}</td>
                 <td className="taskIcon"><img src={editIcon} alt="Edit" /></td>
-                <td className="taskIcon"><img src={trashIcon} alt="Delete" /></td>
+                    <td className="taskIcon"><img src={trashIcon} alt="Delete" onClick={ () => { Data.removeTask(this.props.id); } }/></td>
                 </tr></tbody>
             </table>
         );

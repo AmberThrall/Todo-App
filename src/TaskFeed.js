@@ -15,7 +15,7 @@ class TaskFeed extends React.Component {
     }
 
     randomTask() {
-        Data.addTask(`Task #${Data.tasks.length + 1}`, new Date(), "details", "Project 1");
+        Data.addTask(`Task #${Object.keys(Data.tasks).length + 1}`, new Date(), "details", "Project 1");
         console.log(Data.tasks);
         Data.refreshFeed();
         Data.refreshNavBar();
