@@ -1,0 +1,71 @@
+.taskLowPriority, .taskMediumPriority, .taskHighPriority {
+    background-color: #F6E4F6; 
+    border-left-style: solid;
+    border-size: 5px;
+    height: 48px;
+    padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.taskLowPriority {
+    border-color: green;
+}
+
+.taskMediumPriority {
+    border-color: orange;
+}
+
+.taskHighPriority {
+    border-color: red;
+}
+
+.taskCheckbox {
+    width: 16px;
+    vertical-align: middle;
+    height: 16px;
+    padding-right: 20px;
+}
+
+.taskDetails {
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    width: 50px;
+    text-transform: uppercase;
+}
+
+.taskDetails a {
+    border-radius: 10%;
+    border-style: solid;
+    text-align: center;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.taskDetails a:hover {
+    border-color: #C98986;
+    color: #C98986;
+    cursor: pointer;
+}
+
+.taskDue {
+    width: 100px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.taskIcon {
+    width: 24px;
+    text-align: center;
+    color: #8B575C;
+}
+
+.taskIcon img:hover {
+    cursor: pointer;
+    filter: invert(94%) sepia(86%) saturate(1566%) hue-rotate(294deg) brightness(89%) contrast(73%);
+}
+

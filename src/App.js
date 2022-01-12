@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './Header.js';
+import NavBar from './NavBar.js';
+import Task from './Task.js';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Header />
+        <div className="AppSplit">
+            <NavBar />
+            <div className="AppRightSide">
+                <Task title="Take out Trash" due={new Date(2022, 0, 12, 5, 30)} priority="medium" />
+                <Task title="Go To Bed" due={new Date(2022, 0, 12, 0, 0)} priority="high" />
+                <Task title="Eat Lunch" due={new Date(2022, 0, 12, 12, 0)} priority="medium" />
+                <Task title="Eat Dinner" due={new Date(2022, 0, 12, 18, 0)} priority="medium" />
+                <Task title="Create Todo App" due={new Date(2022, 0, 15)} priority="low" />
+            </div>
+        </div>
     </div>
   );
 }

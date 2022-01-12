@@ -1,0 +1,44 @@
+.navBar {
+    background-color: #F6E4F6;
+    width: 400px;
+    height: 100%;
+    text-align: left;
+    margin: 0;
+    float: left;
+    border-right-style: solid;
+    border-color: #999;
+    border-width: 1px;
+}
+
+.navGroups {
+    list-style-type: none;
+    font-size: 24px;
+}
+
+.navGroups li {
+    margin-bottom: 10px;
+}
+
+.navProjects {
+    list-style-type: none;
+}
+
+.navItem {
+    padding-right: 30px;
+}
+
+.navItemCount {
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    float: right;
+    background-color: #C98986;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+}
+
+.navItem a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
