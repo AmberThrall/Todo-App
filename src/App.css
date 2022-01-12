@@ -10,7 +10,7 @@
     height: calc(100% - 70px);
 }
 
-.AppRightSide {
+.TaskFeed {
     width: calc(100% - 440px);
     text-align: left;
     float: right;

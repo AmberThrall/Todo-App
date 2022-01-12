@@ -59,11 +59,13 @@ class Task extends React.Component {
     render() {
         return (
             <table className={this.#taskPriority(this.props.priority)}>
+                <tbody><tr>
                 <td className="taskLeftSide"><Checkbox label={this.props.title} /></td>
                 <td className="taskDetails"><a>Details</a></td>
                 <td className="taskDue">{this.#timeTill(this.props.due)}</td>
                 <td className="taskIcon"><img src={editIcon} alt="Edit" /></td>
                 <td className="taskIcon"><img src={trashIcon} alt="Delete" /></td>
+                </tr></tbody>
             </table>
         );
     }
