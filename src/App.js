@@ -5,6 +5,7 @@ import Header from './Header.js';
 import NavBar from './NavBar.js';
 import Task from './Task.js';
 import Modal from './Modal.js';
+import DetailsModal from './DetailsModal.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -135,7 +136,11 @@ class App extends React.Component {
     }
 
     randomTask() {
-        this.addTask(`Task #${this.state.tasks.length + 1}`, moment(), "", "Project 1", "medium");
+        this.addTask(`Task #${this.state.tasks.length + 1}`, moment(), `# Remarkable
+
+> Experience real-time editing with Remarkable!
+
+Click the 'clear' link to start with a clean slate, or get the 'permalink' to share or save your results.`, "Project 1", "medium");
     }
 
     render() {
@@ -178,6 +183,7 @@ class App extends React.Component {
                                 "Description:\n" +
                                 task.description
                             );
+                            this.openModal(task.title, <DetailsModal project={task.project} priority={task.priority} due={task.due} description={task.description} />);
                         }}
                         onEdit={() => console.log("Edit task #" + task.id)}
                         onDelete={() => {

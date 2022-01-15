@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "remarkable": "^2.0.1"
   }
 }
