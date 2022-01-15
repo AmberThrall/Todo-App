@@ -1,7 +1,7 @@
 import React from 'react';
+import moment from 'moment';
 import editIcon from './assets/edit.svg';
 import trashIcon from './assets/trash.svg';
-import Data from './Data.js';
 import './Task.css';
 
 class Task extends React.Component {
@@ -12,36 +12,16 @@ class Task extends React.Component {
         }
     }
 
-    #timeTill(due) {
-        const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-
-        let now = new Date();
-        if (now.getFullYear() === due.getFullYear()) {
-            if (now.getMonth() === due.getMonth() && now.getDate() === due.getDate()) {
-                let hour = due.getHours();
-                let minutes = due.getMinutes();
-                if (minutes < 10)
-                    minutes = "0" + minutes;
-
-                let ampm = "AM";
-                if (hour === 0)
-                    hour = 12;
-                else if (hour === 12) {
-                    ampm = "PM";
-                    hour = 12;
-                }
-                else if (hour > 12) {
-                    ampm = "PM";
-                    hour = hour % 12;
-                }
-                return hour + ":" + minutes + " " + ampm;
-            }
+    timeTill(due) {
+        const now = moment();
+        if (now.year() === due.year()) {
+            if (now.month() === due.month() && now.date() === due.date())
+                return due.format('h:mm A');
             else
-                return months[due.getMonth()] + " " + due.getDate();
-
-        } else {
-            return due.getFullYear();
+                return due.format("MMM Do");
         }
+        else
+            return due.format("YYYY");
     }
 
     #taskPriority(priority) {
@@ -53,7 +33,6 @@ class Task extends React.Component {
     }
 
     setChecked(checked) {
-        Data.tasks[this.props.id].checked = checked;
         this.setState({ checked: checked });
     }
 
@@ -68,9 +47,9 @@ class Task extends React.Component {
                     </label>
                 </td>
                 <td className="taskDetails"><a>Details</a></td>
-                <td className="taskDue">{this.#timeTill(this.props.due)}</td>
+                <td className="taskDue">{this.timeTill(this.props.due)}</td>
                 <td className="taskIcon"><img src={editIcon} alt="Edit" /></td>
-                <td className="taskIcon"><img src={trashIcon} alt="Delete" onClick={ () => { Data.removeTask(this.props.id); } }/></td>
+                <td className="taskIcon"><img src={trashIcon} alt="Delete" onClick={ () => { } }/></td>
                 </tr></tbody>
             </table>
         );
