@@ -30,14 +30,15 @@ class Task extends React.Component {
             <table className={this.taskPriority(this.props.priority)}>
                 <tbody><tr>
                 <td className="taskLeftSide">
-                    <label className={this.props.completed ? "taskTitleChecked" : "taskTitleUnchecked"}>
                          <input
+                            id={"taskCheckbox-" + this.props.id}
                             onChange={this.props.onChange} 
                             checked={this.props.completed} 
                             style={{defaultChecked: this.props.completed}} 
                             type="checkbox" 
                             className="taskCheckbox" 
                          />
+                    <label for={"taskCheckbox-" + this.props.id} className={this.props.completed ? "taskTitleChecked" : "taskTitleUnchecked"}>
                         {this.props.title}
                     </label>
                 </td>
