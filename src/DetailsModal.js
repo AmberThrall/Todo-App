@@ -15,10 +15,11 @@ class DetailsModal extends React.Component {
         const due = this.props.due;
         const dueText = due.format("MMM Do, YYYY") + " at " + due.format("h:mm A");  
         const priority = this.props.priority[0].toUpperCase() + this.props.priority.substring(1).toLowerCase();
+        const project = this.props.project === "" ? "" : <><span><strong>Project: </strong>{this.props.project}</span><br /></>;
 
         return (
             <div className="detailsModal">
-                <span><strong>Project: </strong>{this.props.project}</span><br />
+                {project}
                 <span><strong>Priority: </strong>{priority}</span><br />
                 <span><strong>Due: </strong>{dueText}</span><br />
                 <hr />
