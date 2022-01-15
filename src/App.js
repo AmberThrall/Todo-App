@@ -4,6 +4,7 @@ import './App.css';
 import Header from './Header.js';
 import NavBar from './NavBar.js';
 import Task from './Task.js';
+import Modal from './Modal.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -52,6 +53,12 @@ class App extends React.Component {
             ],
             searchParams: {},
             projects: [ "Project 1", "Project 2" ],
+            modal: {
+                open: false,
+                header: "Modal",
+                content: "Hello World",
+                onClose: () => {}
+            }
         };
     }
 
@@ -102,6 +109,31 @@ class App extends React.Component {
         this.setState({tasks: tasks});
     }
 
+    openModal(header, content, onClose = () => {}) {
+        this.setState({
+            modal: {
+                open: true,
+                header: header,
+                content: content,
+                onClose: onClose,
+            }
+        });
+    }
+
+    closeModal() {
+        this.setState({ modal: { open: false } });
+    }
+
+    yesNoModal(header, message, onYes, onNo, onClose = () => {}) {
+        this.openModal(header, (
+            <div className=".yesNoModal">
+                <p>{message}</p>
+                <button onClick={() => { onYes(); this.closeModal(); }}>Yes</button>
+                <button onClick={() => { onNo(); this.closeModal(); }}>No</button>
+            </div>
+        ), onClose);
+    }
+
     randomTask() {
         this.addTask(`Task #${this.state.tasks.length + 1}`, moment(), "", "Project 1", "medium");
     }
@@ -148,13 +180,24 @@ class App extends React.Component {
                             );
                         }}
                         onEdit={() => console.log("Edit task #" + task.id)}
-                        onDelete={() => this.deleteTask(task.id)} 
+                        onDelete={() => {
+                            this.yesNoModal("Delete Task?", "Are you sure you want to delete task '" + task.title + "'?",
+                                () => this.deleteTask(task.id),
+                                () => {} 
+                            );
+                        }}
                     />
                 );
             });
 
         return (
             <div className="App">
+                <Modal 
+                    isOpen={this.state.modal.open} 
+                    header={this.state.modal.header} 
+                    content={this.state.modal.content} 
+                    onClose={() => { this.state.modal.onClose(); this.closeModal(); }}
+                />
                 <Header />
                 <div className="AppSplit">
                     <NavBar categories={categories} projects={projects} />
