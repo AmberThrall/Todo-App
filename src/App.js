@@ -3,7 +3,7 @@ import moment from 'moment';
 import './App.css';
 import Header from './Header.js';
 import NavBar from './NavBar.js';
-import TaskFeed from './TaskFeed.js';
+import Task from './Task.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -71,7 +71,7 @@ class App extends React.Component {
         return results;
     }
 
-    addTask(title, due, details, project, priority = "low") {
+    addTask(title, due, description, project, priority = "low") {
         const id = this.state.tasks.length;
 
         this.setState({
@@ -79,7 +79,7 @@ class App extends React.Component {
                 id,
                 title,
                 due,
-                details,
+                description,
                 project,
                 priority,
                 complete: false,
@@ -88,6 +88,18 @@ class App extends React.Component {
         });
 
         return id;
+    }
+
+    deleteTask(id) {
+        const tasks = this.state.tasks.slice();
+        tasks[id].deleted = true;
+        this.setState({tasks: tasks});
+    }
+
+    changeCompletionStatus(id, status) {
+        const tasks = this.state.tasks.slice();
+        tasks[id].complete = status;
+        this.setState({tasks: tasks});
     }
 
     randomTask() {
@@ -111,12 +123,42 @@ class App extends React.Component {
             };
         });
 
+        const tasks = this.search(this.state.searchParams);
+        const taskFeed = tasks.length === 0 ? 
+            <h1>No Tasks Found!</h1> :
+            tasks.map((task) => {
+                return (
+                    <Task 
+                        id={task.id}
+                        title={task.title}
+                        due={task.due} 
+                        priority={task.priority} 
+                        completed={task.complete}
+                        onChange={() => this.changeCompletionStatus(task.id, !task.complete)}
+                        onDetails={() => {
+                            console.log(
+                                "Details:\n" +
+                                "========\n" + 
+                                "Title: " + task.title + "\n" +
+                                "Project: " + task.project + "\n" +
+                                "Priority: " + task.priority + "\n" +
+                                "Due: " + task.due.format("MMM Do, YYYY") + " at " + task.due.format("h:mm A") + "\n" + 
+                                "Description:\n" +
+                                task.description
+                            );
+                        }}
+                        onEdit={() => console.log("Edit task #" + task.id)}
+                        onDelete={() => this.deleteTask(task.id)} 
+                    />
+                );
+            });
+
         return (
             <div className="App">
                 <Header />
                 <div className="AppSplit">
                     <NavBar categories={categories} projects={projects} />
-                    <TaskFeed tasks={ this.search(this.state.searchParams) } />
+                    <div className="TaskFeed">{taskFeed}</div>
                     <button onClick={() => this.randomTask()}>Add Task</button>
                 </div>
             </div>
