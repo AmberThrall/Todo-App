@@ -17,6 +17,7 @@ function NavBar(props) {
                 <li key="projects">Projects</li>
                 <ul className="navProjects">{projects}</ul>
             </ul>
+            <button className="plusButton" onClick={props.onAdd}></button>
         </div>
     );
 }

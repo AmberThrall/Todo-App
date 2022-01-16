@@ -1,0 +1,114 @@
+.editTask {
+    position: relative;
+    padding: 0;
+    width: 100%;
+}
+
+.editTaskTitle {
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: black;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.editTaskDescription {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 1rem;
+    color: black;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    overflow-x: hidden;
+}
+
+.editTask {
+    font-size: 1rem;
+}
+
+.editTask label {
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.editTaskProject {
+    outline: none;
+
+    align-items: center;
+    position: relative;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1.1;
+
+    background-color: #F4F4F4;
+}
+
+.editTaskPriority {
+    display: inline-block;
+}
+
+.editTaskPriority div {
+    display: inline-block;
+}
+
+.editTaskPriority input[type="radio"] {
+    display: none;
+}
+
+.editTaskPriority input[type="radio"] + label {
+    color: #F4F4F4;
+    font-size: 14px;
+}
+
+.editTaskPriority input[type="radio"] + label span {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin: -1px 4px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #F4F4F4;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33);
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    line-height: 28px;
+}
+
+.editTaskPriority input[type="radio"] + label span img {
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+#taskPriorityLow + label span {
+    background-color: green;
+}
+#taskPriorityMedium + label span {
+    background-color: orange;
+}
+#taskPriorityHigh + label span {
+    background-color: red;
+}
+
+.editTaskPriority input[type="radio"]:checked + label span img {
+    opacity: 1;
+}
+
+.editTaskSubmit {
+    position: absolute;
+    bottom: 5%;
+    right: 1%;
+}

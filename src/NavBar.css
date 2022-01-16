@@ -32,6 +32,7 @@
     width: 24px;
     height: 24px;
     float: right;
+    box-shadow: 0 1px 2px 0 #000;
     background-color: #C98986;
     border-radius: 50%;
     color: white;
@@ -41,4 +42,44 @@
 .navItem a:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.plusButton {
+    border-radius: 100%;
+    box-shadow: 0 2px 4px 0 #000;
+    width: 64px;
+    height: 64px; 
+    background-color: #C98986;
+    color: #F4F4F4;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+
+.plusButton:before, .plusButton:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #F4F4F4;
+}
+
+.plusButton:before {
+    width: 5px;
+    margin: 10px auto;
+}
+
+.plusButton:after {
+    margin: auto 10px;
+    height: 5px;
+}
+
+.plusButton:hover {
+    cursor: pointer;
+    background-color: #8B575C;
 }

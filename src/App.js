@@ -6,6 +6,7 @@ import NavBar from './NavBar.js';
 import Task from './Task.js';
 import Modal from './Modal.js';
 import DetailsModal from './DetailsModal.js';
+import TaskEdit from './TaskEdit.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -127,12 +128,21 @@ class App extends React.Component {
 
     yesNoModal(header, message, onYes, onNo, onClose = () => {}) {
         this.openModal(header, (
-            <div className=".yesNoModal">
+            <div className="yesNoModal">
                 <p>{message}</p>
                 <button onClick={() => { onYes(); this.closeModal(); }}>Yes</button>
                 <button onClick={() => { onNo(); this.closeModal(); }}>No</button>
             </div>
         ), onClose);
+    }
+
+    newTaskModal() {
+        this.openModal("Add Task...", (
+            <TaskEdit title="" description="" priority="" due={moment()} project="" mode="add" projects={this.state.projects} onSubmit={(state) => {
+                this.addTask(state.title, moment(state.dueDate + "T" + state.dueTime), state.description, state.project, state.priority.toLowerCase()); 
+                this.closeModal();
+            } }/>
+        ));
     }
 
     randomTask() {
@@ -173,16 +183,6 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
                         completed={task.complete}
                         onChange={() => this.changeCompletionStatus(task.id, !task.complete)}
                         onDetails={() => {
-                            console.log(
-                                "Details:\n" +
-                                "========\n" + 
-                                "Title: " + task.title + "\n" +
-                                "Project: " + task.project + "\n" +
-                                "Priority: " + task.priority + "\n" +
-                                "Due: " + task.due.format("MMM Do, YYYY") + " at " + task.due.format("h:mm A") + "\n" + 
-                                "Description:\n" +
-                                task.description
-                            );
                             this.openModal(task.title, <DetailsModal project={task.project} priority={task.priority} due={task.due} description={task.description} />);
                         }}
                         onEdit={() => console.log("Edit task #" + task.id)}
@@ -206,9 +206,12 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
                 />
                 <Header />
                 <div className="AppSplit">
-                    <NavBar categories={categories} projects={projects} />
+                    <NavBar 
+                        categories={categories} 
+                        projects={projects} 
+                        onAdd={() => this.newTaskModal()}
+                    />
                     <div className="TaskFeed">{taskFeed}</div>
-                    <button onClick={() => this.randomTask()}>Add Task</button>
                 </div>
             </div>
         );
