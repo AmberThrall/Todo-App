@@ -178,7 +178,7 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
         const categories = this.state.categories.map((category) => {
             return {
                 name: category.name,
-                onClick: () => console.log("Changed category to " + category.name),
+                onClick: () => this.setState({ searchParams: category.params() }),
                 count: this.search(category.params()).length,
             };
         });
@@ -186,7 +186,7 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
         const projects = this.state.projects.map((project) => {
             return {
                 name: project,
-                onClick: () => console.log("Changed category to project " + project),
+                onClick: () => this.setState({ searchParams: { project: project } }),
                 count: this.search({ project: project }).length,
             };
         });
