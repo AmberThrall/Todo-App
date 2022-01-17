@@ -7,6 +7,7 @@ import Task from './Task.js';
 import Modal from './Modal.js';
 import DetailsModal from './DetailsModal.js';
 import TaskEdit from './TaskEdit.js';
+import NewProject from './NewProject.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class App extends React.Component {
         if (projects)
             projects = JSON.parse(projects);
         else
-            projects = [];
+            projects = ["Default"];
 
         super(props);
         this.state = {
@@ -126,6 +127,11 @@ class App extends React.Component {
 
     editTask(id, title, due, description, project, priority) {
         const tasks = this.state.tasks.slice();
+        if (!tasks[id]) {
+            this.openModal("Error", "Cannot edit task #" + id + ", no such task found.");
+            return;
+        }
+
         tasks[id].title = title;
         tasks[id].due = due;
         tasks[id].description = description;
@@ -136,14 +142,33 @@ class App extends React.Component {
 
     deleteTask(id) {
         const tasks = this.state.tasks.slice();
+        if (!tasks[id]) {
+            this.openModal("Error", "Cannot delete task #" + id + ", no such task found.");
+            return;
+        }
+
         tasks[id].deleted = true;
         this.setState({tasks: tasks});
     }
 
     changeCompletionStatus(id, status) {
         const tasks = this.state.tasks.slice();
+        if (!tasks[id]) {
+            this.openModal("Error", "Cannot change completion status of task #" + id + ", no such task found.");
+            return;
+        }
+
         tasks[id].complete = status;
         this.setState({tasks: tasks});
+    }
+
+    addProject(project) {
+        if (this.state.projects.includes(project)) {
+            this.openModal("Error", "Cannot add project '" + project + "', project already exists.");
+            return;
+        }
+
+        this.setState({ projects: this.state.projects.concat([ project ]) });
     }
 
     openModal(header, content, onClose = () => {}) {
@@ -191,14 +216,6 @@ class App extends React.Component {
         ));
     }
 
-    randomTask() {
-        this.addTask(`Task #${this.state.tasks.length + 1}`, moment(), `# Remarkable
-
-> Experience real-time editing with Remarkable!
-
-Click the 'clear' link to start with a clean slate, or get the 'permalink' to share or save your results.`, "Project 2", "medium");
-    }
-
     render() {
         this.saveData();
 
@@ -210,15 +227,39 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
             };
         });
 
-        const projects = this.state.projects.map((project) => {
+        let projects = this.state.projects.map((project) => {
             return {
                 name: project,
                 onClick: () => this.setState({ searchParams: { project: project } }),
                 count: this.search({ project: project }).length,
             };
         });
+        projects.push({
+            name: "+ Add Project",
+            onClick: () => {
+                this.openModal("Add Project...", <NewProject onSubmit={(project) => {
+                    this.closeModal();
+                    this.addProject(project);
+                }} />);
+            },
+        });
 
-        const tasks = this.search(this.state.searchParams);
+
+        const tasks = this.search(this.state.searchParams).sort((a, b) => { 
+            if (a.due.isBefore(b.due))
+                return -1;
+            if (a.due.isAfter(b.due))
+                return 1;
+            if (a.priority === "high" && (b.priority === "medium" || b.priority === "low"))
+                return -1;
+            if (a.priority === "medium" && b.priority === "low")
+                return -1;
+            if (a.priority === "low" && (b.priority === "medium" || b.priority === "high"))
+                return 1;
+            if (a.priority === "medium" && b.priority === "high")
+                return 1;
+            return 0;
+        });
         const taskFeed = tasks.length === 0 ? 
             <h1>No Tasks Found!</h1> :
             tasks.map((task) => {

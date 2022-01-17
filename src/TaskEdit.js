@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import check from './assets/check.svg';
 import './TaskEdit.css';
 
@@ -47,8 +46,6 @@ class TaskEdit extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log("Submit:");
-        console.log(event);
         event.preventDefault();
         this.props.onSubmit(this.state);
     }

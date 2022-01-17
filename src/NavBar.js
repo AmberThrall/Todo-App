@@ -7,7 +7,10 @@ function NavBar(props) {
     });
 
     const projects = props.projects.map((project, id) => {
-        return <li key={"project" + id} className="navItem"><a onClick={project.onClick}>{project.name}</a><span className="navItemCount">{project.count}</span></li>;
+        if (project.count !== undefined)
+            return <li key={"project" + id} className="navItem"><a onClick={project.onClick}>{project.name}</a><span className="navItemCount">{project.count}</span></li>;
+        else
+            return <li key={"project" + id} className="navItem"><a onClick={project.onClick}>{project.name}</a></li>;
     });
 
     return (
