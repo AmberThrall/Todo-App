@@ -99,6 +99,16 @@ class App extends React.Component {
         return id;
     }
 
+    editTask(id, title, due, description, project, priority) {
+        const tasks = this.state.tasks.slice();
+        tasks[id].title = title;
+        tasks[id].due = due;
+        tasks[id].description = description;
+        tasks[id].project = project;
+        tasks[id].priority = priority;
+        this.setState({ tasks: tasks });
+    }
+
     deleteTask(id) {
         const tasks = this.state.tasks.slice();
         tasks[id].deleted = true;
@@ -138,10 +148,21 @@ class App extends React.Component {
 
     newTaskModal() {
         this.openModal("Add Task...", (
-            <TaskEdit title="" description="" priority="" due={moment()} project="" mode="add" projects={this.state.projects} onSubmit={(state) => {
+            <TaskEdit title="" description="" priority="low" due={moment()} project="" mode="add" projects={this.state.projects} onSubmit={(state) => {
                 this.addTask(state.title, moment(state.dueDate + "T" + state.dueTime), state.description, state.project, state.priority.toLowerCase()); 
                 this.closeModal();
             } }/>
+        ));
+    }
+
+    editTaskModal(id) {
+        const task = this.state.tasks[id];
+
+        this.openModal("Edit Task...", (
+            <TaskEdit title={task.title} description={task.description} priority={task.priority} due={task.due} project={task.project} mode="edit" projects={this.state.projects} onSubmit={(state) => {
+                this.editTask(id, state.title, moment(state.dueDate + "T" + state.dueTime), state.description, state.project, state.priority.toLowerCase());
+                this.closeModal();
+            } } />
         ));
     }
 
@@ -150,7 +171,7 @@ class App extends React.Component {
 
 > Experience real-time editing with Remarkable!
 
-Click the 'clear' link to start with a clean slate, or get the 'permalink' to share or save your results.`, "Project 1", "medium");
+Click the 'clear' link to start with a clean slate, or get the 'permalink' to share or save your results.`, "Project 2", "medium");
     }
 
     render() {
@@ -185,7 +206,7 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
                         onDetails={() => {
                             this.openModal(task.title, <DetailsModal project={task.project} priority={task.priority} due={task.due} description={task.description} />);
                         }}
-                        onEdit={() => console.log("Edit task #" + task.id)}
+                        onEdit={() => this.editTaskModal(task.id)}
                         onDelete={() => {
                             this.yesNoModal("Delete Task?", "Are you sure you want to delete task '" + task.title + "'?",
                                 () => this.deleteTask(task.id),

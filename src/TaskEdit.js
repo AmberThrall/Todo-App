@@ -7,12 +7,12 @@ class TaskEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: "",
-            description: "",
-            priority: "low",
-            dueDate: moment().format("YYYY-MM-D"),
-            dueTime: moment().format('HH:mm'),
-            project: this.props.projects[0],
+            title: this.props.title,
+            description: this.props.description,
+            priority: this.props.priority,
+            dueDate: this.props.due.format("YYYY-MM-D"),
+            dueTime: this.props.due.format('HH:mm'),
+            project: this.props.project === "" ? this.props.projects[0] : this.props.project,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,6 +40,8 @@ class TaskEdit extends React.Component {
             case "taskPriorityMedium":
             case "taskPriorityHigh":
                 this.setState({ priority: event.target.value.toLowerCase() });
+                break;
+            default:
                 break;
         }
     }
@@ -79,7 +81,7 @@ class TaskEdit extends React.Component {
         return (
             <div className="editTask">
                 <form onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="Title" className="editTaskTitle" id="taskTitle" value={this.state.value} onChange={this.handleChange} required />
+                <input type="text" placeholder="Title" className="editTaskTitle" id="taskTitle" value={this.state.title} onChange={this.handleChange} required />
                 <textarea rows="5" placeholder="Description" className="editTaskDescription" id="taskDescription" value={this.state.description} onChange={this.handleChange}></textarea>
                 <table className="editTaskMisc"><tbody>
                     <tr>
@@ -101,7 +103,7 @@ class TaskEdit extends React.Component {
                         </td>
                     </tr>
                 </tbody></table>
-                <button className="editTaskSubmit">Add</button>
+                <button className="editTaskSubmit">{this.props.mode === "add" ? "Add" : "Save"}</button>
                 </form>
             </div>
         );
