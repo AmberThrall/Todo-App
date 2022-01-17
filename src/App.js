@@ -10,9 +10,29 @@ import TaskEdit from './TaskEdit.js';
 
 class App extends React.Component {
     constructor(props) {
+        let tasks = localStorage.getItem("tasks");
+        let projects = localStorage.getItem("projects");
+
+        if (tasks) {
+            tasks = JSON.parse(tasks);
+            tasks = tasks.map((task) => {
+                return {
+                    ...task,
+                    due: moment(task.due),
+                };
+            });
+        }
+        else
+            tasks = [];
+
+        if (projects)
+            projects = JSON.parse(projects);
+        else
+            projects = [];
+
         super(props);
         this.state = {
-            tasks: [],
+            tasks: tasks,
             categories: [
                 {
                     name: "All Tasks",
@@ -54,7 +74,7 @@ class App extends React.Component {
 
             ],
             searchParams: {},
-            projects: [ "Project 1", "Project 2" ],
+            projects: projects,
             modal: {
                 open: false,
                 header: "Modal",
@@ -62,6 +82,11 @@ class App extends React.Component {
                 onClose: () => {}
             }
         };
+    }
+
+    saveData() {
+        localStorage.setItem("tasks", JSON.stringify(this.state.tasks));
+        localStorage.setItem("projects", JSON.stringify(this.state.projects));
     }
 
     search(params = {}) {
@@ -175,6 +200,8 @@ Click the 'clear' link to start with a clean slate, or get the 'permalink' to sh
     }
 
     render() {
+        this.saveData();
+
         const categories = this.state.categories.map((category) => {
             return {
                 name: category.name,
