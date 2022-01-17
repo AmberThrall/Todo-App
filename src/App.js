@@ -179,7 +179,7 @@ class App extends React.Component {
         }
 
         let projects = this.state.projects.slice();
-        delete projects[id];
+        projects.splice(id, 1);
         this.setState({ projects: projects });
     }
 
@@ -235,7 +235,7 @@ class App extends React.Component {
             return {
                 name: category.name,
                 onClick: () => this.setState({ searchParams: category.params() }),
-                count: this.search(category.params()).length,
+                count: this.search(category.params()).filter((t) => { return !t.complete }).length,
             };
         });
 
@@ -243,7 +243,7 @@ class App extends React.Component {
             return {
                 name: project,
                 onClick: () => this.setState({ searchParams: { project: project } }),
-                count: this.search({ project: project }).length,
+                count: this.search({ project: project }).filter((t) => { return !t.complete }).length,
             };
         });
         projects.push({
@@ -255,7 +255,7 @@ class App extends React.Component {
                 }} />);
             },
         });
-
+        console.log(projects);
 
         const tasks = this.search(this.state.searchParams).sort((a, b) => { 
             if (a.due.isBefore(b.due))
