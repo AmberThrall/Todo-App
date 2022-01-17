@@ -38,7 +38,7 @@ class Task extends React.Component {
                             type="checkbox" 
                             className="taskCheckbox" 
                          />
-                    <label for={"taskCheckbox-" + this.props.id} className={this.props.completed ? "taskTitleChecked" : "taskTitleUnchecked"}>
+                    <label htmlFor={"taskCheckbox-" + this.props.id} className={this.props.completed ? "taskTitleChecked" : "taskTitleUnchecked"}>
                         {this.props.title}
                     </label>
                 </td>

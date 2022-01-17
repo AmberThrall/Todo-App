@@ -52,14 +52,14 @@ class TaskEdit extends React.Component {
 
     render() {
         const projects = this.props.projects.map((project) => {
-            return <option value={project}>{project}</option>;
+            return <option key={project} value={project}>{project}</option>;
         });
 
         const priorities = ["Low", "Medium", "High"];
         const prioritiesContent = priorities.map((p) => {
             if (this.state.priority === p.toLowerCase()) {
                 return (
-                    <div>
+                    <div key={p}>
                         <input type="radio" name="priority" id={"taskPriority" + p} value={p} checked onChange={this.handleChange} />
                         <label htmlFor={"taskPriority" + p}><span><img src={check} alt="Checked Icon" /></span></label>
                     </div>
@@ -67,7 +67,7 @@ class TaskEdit extends React.Component {
             }
             else {
                 return (
-                    <div>
+                    <div key={p}>
                         <input type="radio" name="priority" id={"taskPriority" + p} value={p} onChange={this.handleChange} />
                         <label htmlFor={"taskPriority" + p}><span><img src={check} alt="Checked Icon" /></span></label>
                     </div>

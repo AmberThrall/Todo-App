@@ -286,6 +286,7 @@ class App extends React.Component {
                 return (
                     <Task 
                         id={task.id}
+                        key={task.id}
                         title={task.title}
                         due={task.due} 
                         priority={task.priority} 
