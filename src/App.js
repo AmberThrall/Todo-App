@@ -171,6 +171,18 @@ class App extends React.Component {
         this.setState({ projects: this.state.projects.concat([ project ]) });
     }
 
+    deleteProject(project) {
+        const id = this.state.projects.indexOf(project);
+        if (id < 0) {
+            this.openModal("Error", "Cannot delete project '" + project + "', no such project found.");
+            return;
+        }
+
+        let projects = this.state.projects.slice();
+        delete projects[id];
+        this.setState({ projects: projects });
+    }
+
     openModal(header, content, onClose = () => {}) {
         this.setState({
             modal: {
@@ -260,9 +272,18 @@ class App extends React.Component {
                 return 1;
             return 0;
         });
-        const taskFeed = tasks.length === 0 ? 
-            <h1>No Tasks Found!</h1> :
-            tasks.map((task) => {
+        let taskFeed;
+        if (tasks.length === 0) {
+            if (this.state.searchParams.project && this.state.searchParams.project !== "Default")
+                taskFeed = <><h1>No Tasks Found!</h1><center><button onClick={() => {
+                    this.deleteProject(this.state.searchParams.project);
+                    this.setState({ searchParams: this.state.categories[0].params() });
+                }}>Delete Project: "{this.state.searchParams.project}"</button></center></>;
+            else
+                taskFeed = <h1>No Tasks Found!</h1>;
+        }
+        else {
+            taskFeed = tasks.map((task) => {
                 return (
                     <Task 
                         id={task.id}
@@ -284,6 +305,7 @@ class App extends React.Component {
                     />
                 );
             });
+        }
 
         return (
             <div className="App">
