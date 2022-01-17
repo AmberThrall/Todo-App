@@ -198,7 +198,7 @@ class App extends React.Component {
 
     newTaskModal() {
         this.openModal("Add Task...", (
-            <TaskEdit title="" description="" priority="low" due={moment().endOf('day')} project="" mode="add" projects={this.state.projects} onSubmit={(state) => {
+            <TaskEdit title="" description="" priority="low" due={moment().endOf('day')} project={ this.state.searchParams.project || "Default" } mode="add" projects={this.state.projects} onSubmit={(state) => {
                 this.addTask(state.title, moment(state.dueDate + "T" + state.dueTime), state.description, state.project, state.priority.toLowerCase()); 
                 this.closeModal();
             } }/>
