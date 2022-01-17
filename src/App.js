@@ -255,7 +255,6 @@ class App extends React.Component {
                 }} />);
             },
         });
-        console.log(projects);
 
         const tasks = this.search(this.state.searchParams).sort((a, b) => { 
             if (a.due.isBefore(b.due))

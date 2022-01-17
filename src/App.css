@@ -11,7 +11,9 @@
 }
 
 .TaskFeed {
+    overflow: auto scroll;
     width: calc(100% - 440px);
+    height: calc(100% - 20px);
     text-align: left;
     float: right;
     padding-top: 20px;
