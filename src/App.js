@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import './App.css';
 import Header from './Header.js';
 import NavBar from './NavBar.js';
 import Task from './Task.js';
@@ -8,6 +7,7 @@ import Modal from './Modal.js';
 import DetailsModal from './DetailsModal.js';
 import TaskEdit from './TaskEdit.js';
 import NewProject from './NewProject.js';
+import './App.css';
 var _ = require('lodash');
 
 class App extends React.Component {
