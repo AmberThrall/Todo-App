@@ -8,6 +8,7 @@ import Modal from './Modal.js';
 import DetailsModal from './DetailsModal.js';
 import TaskEdit from './TaskEdit.js';
 import NewProject from './NewProject.js';
+var _ = require('lodash');
 
 class App extends React.Component {
     constructor(props) {
@@ -236,6 +237,7 @@ class App extends React.Component {
                 name: category.name,
                 onClick: () => this.setState({ searchParams: category.params() }),
                 count: this.search(category.params()).filter((t) => { return !t.complete }).length,
+                selected: _.isEqual(this.state.searchParams, category.params()),
             };
         });
 
@@ -244,6 +246,7 @@ class App extends React.Component {
                 name: project,
                 onClick: () => this.setState({ searchParams: { project: project } }),
                 count: this.search({ project: project }).filter((t) => { return !t.complete }).length,
+                selected: this.state.searchParams.project === project,
             };
         });
         projects.push({

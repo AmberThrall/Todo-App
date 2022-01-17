@@ -3,12 +3,12 @@ import './NavBar.css';
 
 function NavBar(props) {
     const categories = props.categories.map((category, id) => {
-        return <li key={id} className="navItem"><button onClick={category.onClick}>{category.name}</button><span className="navItemCount">{category.count}</span></li>;
+        return <li key={id} className="navItem"><button onClick={category.onClick}>{category.selected ? <strong>{category.name}</strong> : category.name}</button><span className="navItemCount">{category.count}</span></li>;
     });
 
     const projects = props.projects.map((project, id) => {
         if (project.count !== undefined)
-            return <li key={"project" + id} className="navItem"><button onClick={project.onClick}>{project.name}</button><span className="navItemCount">{project.count}</span></li>;
+            return <li key={"project" + id} className="navItem"><button onClick={project.onClick}>{project.selected ? <strong>{project.name}</strong> : project.name}</button><span className="navItemCount">{project.count}</span></li>;
         else
             return <li key={"project" + id} className="navItem"><button onClick={project.onClick}>{project.name}</button></li>;
     });
